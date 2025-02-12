@@ -1,14 +1,15 @@
-import 'package:batch_9_apps/ui/widgets/build_elevated_button.dart';
+
+import 'package:batch_9_apps/features/calculator/ui/widgets/build_elevated_button.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class CalculatorScreen extends StatefulWidget {
+  const CalculatorScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CalculatorScreen> createState() => _CalculatorScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CalculatorScreenState extends State<CalculatorScreen> {
   String _outPut = '0';
   String _inPut = '';
   String _operation = '';
