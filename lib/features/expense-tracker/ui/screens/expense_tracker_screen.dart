@@ -158,7 +158,12 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextButton.icon(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _showMBSheet(
+                                      expense: _expensesList[index],
+                                      index: index,
+                                    );
+                                  },
                                   label: Text(
                                     'Edit',
                                     style: TextStyle(
@@ -241,8 +246,10 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
     );
   }
 
-  void _showMBSheet() {
-    String selectedCategory = _categoriesList.first;
+  void _showMBSheet({ExpenseModel? expense, int? index}) {
+    String selectedCategory = expense?.category ?? _categoriesList.first;
+    _titleTEController.text = expense?.title ?? '';
+    _amountTEController.text = expense?.amount.toString() ?? '';
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -287,20 +294,24 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
                   ),
                 ),
                 onPressed: () {
-                  // if (_titleTEController.text.isNotEmpty ||
-                  //     double.tryParse(_amountTEController.text) == null) {
-                  //   return;
-                  // }
-                  _addExpense(
-                    _titleTEController.text,
-                    double.parse(_amountTEController.text),
-                    DateTime.now(),
-                    selectedCategory,
-                  );
+                  double? amount = double.tryParse(_amountTEController.text);
+                  if(_titleTEController.text.isEmpty || amount == null) return;
+                  if(index != null) {
+                    _editExpense(index, _titleTEController.text, amount, selectedCategory);
+                  } else {
+                    _addExpense(
+                      _titleTEController.text,
+                      double.parse(_amountTEController.text),
+                      DateTime.now(),
+                      selectedCategory,
+                    );
+                  }
+
                   _clearAfterAdd();
                   Navigator.pop(context);
                 },
-                child: Text('Add Expense', style: TextStyle(fontSize: 20)),
+                child: Text(index != null ? 'Edit Expense' : 'Add Expense',
+                    style: TextStyle(fontSize: 20)),
               ),
               SizedBox(height: 20),
             ],
@@ -327,5 +338,17 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
     _totalExpenses -= _expensesList[index].amount;
     _expensesList.removeAt(index);
     setState(() {});
+  }
+
+  void _editExpense(int index, String title, double amount, String category) {
+    setState(() {
+      _totalExpenses = _totalExpenses - _expensesList[index].amount + amount;
+      _expensesList[index] = ExpenseModel(
+        title: title,
+        amount: amount,
+        date: _expensesList[index].date,
+        category: category,
+      );
+    });
   }
 }
