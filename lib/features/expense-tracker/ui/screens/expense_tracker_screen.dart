@@ -266,22 +266,93 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
             children: [
               TextField(
                 controller: _titleTEController,
-                decoration: InputDecoration(labelText: 'Title: '),
+                decoration: InputDecoration(
+                  labelText: 'Title: ',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 10),
               TextField(
                 controller: _amountTEController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Amount: '),
+                decoration: InputDecoration(
+                  labelText: 'Amount: ',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 items: _categoriesList
-                    .map((category) => DropdownMenuItem(
-                        value: category, child: Text(category)))
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(
+                          category,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
+                    )
                     .toList(),
                 onChanged: (value) => selectedCategory = value!,
-                decoration: InputDecoration(labelText: 'Category:'),
+                decoration: InputDecoration(
+                  labelText: 'Category:',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -295,9 +366,10 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
                 ),
                 onPressed: () {
                   double? amount = double.tryParse(_amountTEController.text);
-                  if(_titleTEController.text.isEmpty || amount == null) return;
-                  if(index != null) {
-                    _editExpense(index, _titleTEController.text, amount, selectedCategory);
+                  if (_titleTEController.text.isEmpty || amount == null) return;
+                  if (index != null) {
+                    _editExpense(index, _titleTEController.text, amount,
+                        selectedCategory);
                   } else {
                     _addExpense(
                       _titleTEController.text,
@@ -341,14 +413,13 @@ class _ExpenseTrackerScreenState extends State<ExpenseTrackerScreen> {
   }
 
   void _editExpense(int index, String title, double amount, String category) {
-    setState(() {
-      _totalExpenses = _totalExpenses - _expensesList[index].amount + amount;
-      _expensesList[index] = ExpenseModel(
-        title: title,
-        amount: amount,
-        date: _expensesList[index].date,
-        category: category,
-      );
-    });
+    _totalExpenses = _totalExpenses - _expensesList[index].amount + amount;
+    _expensesList[index] = ExpenseModel(
+      title: title,
+      amount: amount,
+      date: _expensesList[index].date,
+      category: category,
+    );
+    setState(() {});
   }
 }
