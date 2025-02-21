@@ -1,7 +1,6 @@
-import 'package:batch_9_apps/features/calculator/ui/screens/calculator_screen.dart';
+import 'package:batch_9_apps/features/bmi_app/ui/screens/bmi_screen.dart';
 import 'package:batch_9_apps/features/expense-tracker/ui/screens/expense_tracker_screen.dart';
-import 'package:batch_9_apps/features/todo_app/ui/screens/todo_app_screen.dart';
-import 'package:batch_9_apps/features/water-tracker/ui/screens/water_tracker_screen.dart';
+import 'package:batch_9_apps/features/rest_api_concept/ui/screens/rest_api_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TodoAppScreen(),
+      home: BmiScreen(),
     );
   }
 }
